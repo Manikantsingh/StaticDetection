@@ -3,12 +3,12 @@
 make all path="absolutepath"
 
 
-OR 
+#OR 
 
-1 #			First install all the dependencies
+1. #			First install all the dependencies
 make dependencies
 
-2 #			After installing all the dependenices just trun following command with absolute path.
+2. #			After installing all the dependenices just trun following command with absolute path.
 make run path="absolutepath"
 
 To generate new model run generateModel.py. It will require modify the file to give correct path to TrainingData.csv.
