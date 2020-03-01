@@ -7,10 +7,10 @@ generateModel.py requires following packages to be imported.
 
 #Commands to run:
 #			Make all install all the dependencies and run test with given path.
-Command: 	make all path="<absolutepath>"
+make all path= "absolutepath"
 
 #			First install all the dependencies
-Command:	make dependencies
+make dependencies
 
 #			After installing all the dependenices just trun following command with absolute path.
-Command		 make run path="<absolutepath>"
+make run path= "absolutepath"
