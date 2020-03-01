@@ -251,7 +251,7 @@ def extractPEHeader(filepath):
 
 
 def startProcessing(directory):
-    for file_folder in os.listdir(directory):
+    for file_folder in os.listdir(directory)[:10]:
         combinedFeatures.update({}.fromkeys(combinedFeatures, 0))
         combinedFeatures.update({"name":file_folder})
         namearr.append(file_folder)
@@ -280,21 +280,21 @@ def main():
 
 
 def testWithModel():
+    #Standard PCA component
+    std_pca = pickle.load(open("./PCA.pkl", "rb"))
+
     model = pickle.load(open("./scriptedModel.sav", "rb"))
     df = pd.read_csv("./TestData.csv",sep=",")
 
     df = df.loc[(df != 0).any(axis=1)]
     df = df.fillna(0)
     df = df.drop(['name'],axis=1)
-    X_t = df
+    X_test = df
 
-    # scaler = StandardScaler()
-    # scaler.fit(X_t)
-    # X_t = scaler.transform(X_t)
-    # pca_reload = pickle.load(open("pca.pkl", 'rb'))
-    # X_t = pca_reload.transform(X_t)
+    #Applying original PCA. which was applied at the time of training.
+    X_test = std_pca.transform(X_test)
 
-    yhat = model.predict(X_t)
+    yhat = model.predict(X_test)
     result= pd.DataFrame({'File_Hash': namearr, 'Predicted_Label': yhat})
     writeResultCSV(result)
     print(result)

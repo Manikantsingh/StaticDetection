@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.pipeline import make_pipeline
 import pickle
 
 
@@ -20,12 +21,25 @@ feature_list = list(X.columns)
 # X = pca.transform(X)
 # pickle.dump(pca, open("pca.pkl","wb"))
 
-model = RandomForestClassifier(n_estimators=100)
-model.fit(X, y)
+# model = RandomForestClassifier(n_estimators=100)
+# model.fit(X, y)
 
-filename = './scriptedModel.sav'
-pickle.dump(model, open(filename, 'wb'))
+std_pca = make_pipeline(StandardScaler(), PCA(0.99))
+X_trans = std_pca.fit_transform(X)
 
+model = RandomForestClassifier(n_estimators=150)
+model.fit(X_trans,y)
+
+# model = make_pipeline(StandardScaler(), PCA(0.99), RandomForestClassifier(n_estimators=100))
+# model.fit(X, y)
+
+fileP = "./PCA.pkl"
+pickle.dump(std_pca, open(fileP, 'wb'))
+fileM = "./scriptedModel.sav"
+pickle.dump(model, open(fileM, 'wb'))
+
+# file = "./scriptedModel.sav"
+# pickle.dump(model, open(file, 'wb'))
 
 #Random Forest
 #
